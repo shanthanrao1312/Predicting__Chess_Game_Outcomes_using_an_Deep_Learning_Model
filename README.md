@@ -162,3 +162,5 @@ Swish activation and exponential learning rate decay significantly improved trai
 Performance can rival traditional engines like Stockfish in general position prediction (excluding deep tactical lines).
 
 Use of oneDNN backend and callbacks (e.g., early stopping) helped improve performance and training time on CPUs.
+
+Thank you for visiting this repository!
