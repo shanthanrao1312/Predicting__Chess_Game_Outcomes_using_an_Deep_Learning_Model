@@ -1,136 +1,115 @@
-# 🧠 Predicting Chess Game Outcomes Using Deep Learning (MLP)
+# ♟️ **Predicting Chess Game Outcomes Using Deep Learning (MLP)** 🧠
 
-## 📌 Overview
-
-This project explores the use of **deep learning models**, specifically **Multilayer Perceptrons (MLPs)**, to predict the outcome of a chess position—win, draw, or loss—based purely on the board state. The pipeline involves parsing a dataset of millions of chess games into **FEN strings**, converting them into numerical feature vectors, and training a neural network on this representation.
+Welcome to the fascinating world of **AI Chess Prediction**! This project leverages the power of **Multilayer Perceptrons (MLPs)** to predict chess outcomes—**win**, **draw**, or **loss**—using raw board states. By processing millions of games into **FEN strings** and encoding them into feature vectors, we’ve built highly optimized neural networks that decode chess positions with remarkable precision.
 
 ---
 
-![Chess Prediction Visualization](https://github.com/user-attachments/assets/140d9918-f429-46a7-824b-afe167d087eb)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/140d9918-f429-46a7-824b-afe167d087eb" alt="Chess Prediction Visualization" width="300">
+</div>
 
 ---
 
-## 🧰 Technologies & Frameworks Used
-
-- **TensorFlow (with Keras API)**: Core deep learning framework
-- **Intel oneDNN**: CPU-accelerated deep learning operations
-- **NumPy, Pandas**: Data processing and transformation
-- **Matplotlib**: Visualization of training performance
-- **Stockfish**: Chess engine used for comparative evaluation
-
----
-
-## 🧠 Neural Network Architecture
-
-### 🔷 Initial Model
-
-- **Input Layer**: 73-dimensional feature vector (encoded FEN)
-- **Hidden Layers**: 2 layers with 64 neurons each
-- **Activation**: ReLU
-- **Output Layer**: Softmax activation
-- **Optimizer**: Adam (fixed learning rate: 0.001)
-- **Batch Size**: 32
-- **Epochs**: 20
-- **Accuracy**: ~63.8%
-
-### 🔶 Final Optimized Model
-
-- **Architecture**: 8-layer deep MLP
-- **Hidden Layers**: 5 dense layers (1024 → 128 units)
-- **Activation**: Swish
-- **Residual Connection**: Added in the 3rd block
-- **Regularization**:
-  - Dropout (0.3–0.5)
-  - Batch Normalization
-- **Optimizer**: Adam with Exponential Decay learning rate schedule
-- **Batch Size**: 64
-- **Epochs**: Up to 100 (with EarlyStopping)
-- **Callbacks**: EarlyStopping, learning rate scheduler
-- **Accuracy**: 83.8%
+## 🛠️ **Technologies Used**
+- 🔸 **TensorFlow (Keras API)**: Core deep learning framework.  
+- 🔸 **Intel oneDNN**: CPU-accelerated deep learning operations.  
+- 🔸 **NumPy & Pandas**: Efficient data processing pipelines.  
+- 🔸 **Matplotlib**: Visualizing training performance.  
+- 🔸 **Stockfish**: Comparing model predictions with the world-renowned chess engine.  
 
 ---
 
-## 📊 Feature Engineering
+## 🧠 **Model Architecture**
 
-The chess positions were encoded using **Forsyth–Edwards Notation (FEN)** and parsed into a **73-dimensional feature vector**:
-
-1. **64**: Board layout (piece-to-integer mapping)
-2. **1**: Turn (white/black)
-3. **4**: Castling rights
-4. **2**: En passant possibility
-5. **2**: Move counters
-
----
-
-## 🔄 Optimization Strategies
-
-### Activation Functions Explored
-
-- Tanh
-- Leaky ReLU
-- Swish
-- SparseMax
-
-### Hyperparameter Tuning Techniques
-
-- Manual tuning
-- Grid Search
-- Bayesian Optimization
-- Neural Architecture Search (NAS)
-
-### Architectures Tested
-
-- **MLP**: Baseline and optimized versions
-- **ResNet-style MLP**
-- **MobileNet**: Via transfer learning
+### 🔷 **Baseline Model**
+- **Input**: 73-dimensional FEN-based encoded vector.
+- **Hidden Layers**: 2 dense layers with 64 neurons each.
+- **Activation**: ReLU.
+- **Output**: Softmax activation for 3 classes (win, draw, loss).
+- **Optimizer**: Adam (fixed learning rate: 0.001).
+- **Performance**: Achieved **63.8% accuracy**.
 
 ---
 
-## ♟ Stockfish Evaluation
-
-Model predictions were compared against **Stockfish** evaluations to benchmark accuracy. Results on a large dataset:
-
-- **Average Deviation from Stockfish**: 178.68
-- **Maximum Deviation**: 8226 (in complex positions)
-- **Simpler Positions**: Strong alignment (average deviation ~29.4)
-
----
-
-## 📈 Evaluation Results
-
-| **Method**            | **Accuracy (5000 games)** |
-|------------------------|---------------------------|
-| MLP (Initial)          | 63.8%                    |
-| MLP (Optimized)        | 83.8%                    |
-| ResNet-style MLP       | 72.92%                   |
-| MobileNet              | 84.95% (10 games)        |
-| NAS                    | 70.8%                    |
-| Grid Search            | 79.56%                   |
-| Bayesian Optimization  | 93.33% (10 games)        |
+### 🔶 **Optimized Model**
+- **Architecture**: 8-layer deep MLP with advanced optimizations.
+- **Hidden Layers**: 5 dense layers (1024 → 128 units).
+- **Activation**: Swish (for faster convergence).
+- **Enhancements**:
+  - Residual connections added in the 3rd block.
+  - Dropout (0.3–0.5) and Batch Normalization for regularization.
+- **Optimizer**: Adam with exponential learning rate decay.
+- **Performance**: Achieved **83.8% accuracy**.
 
 ---
 
-## 🧪 Experiments Conducted
-
-- **Dataset Sizes**: Training across varying sizes (10, 1000, 5000 games)
-- **Metrics Tracked**: Loss and accuracy across epochs
-- **Comparative Architectures**: MLP, ResNet-style MLP, MobileNet
-- **Hyperparameter Tuning**:
-  - **Epochs**: 20 to 100
-  - **Batch Sizes**: 32, 64
-  - **Optimizers**: Adam, SGD
-  - **Learning Rates**: Fixed vs decayed
-  - **Activation Functions**: Explored various options
+## 📊 **Feature Engineering**
+Chess board states were encoded using **Forsyth–Edwards Notation (FEN)**, which were then parsed into **73-dimensional feature vectors**:
+1. **64**: Encoded board layout (piece-to-integer mapping).  
+2. **1**: Turn indicator (white or black).  
+3. **4**: Castling rights.  
+4. **2**: En passant possibilities.  
+5. **2**: Move counters (half-move clock & full-move number).  
 
 ---
 
-## 🏁 Key Takeaways
+## 🔄 **Optimization Strategies**
 
-1. **MLPs** can effectively learn to evaluate chess positions from raw board state encodings.
-2. **Swish activation** and **exponential learning rate decay** significantly improved training stability and accuracy.
-3. Performance rivals traditional engines like **Stockfish** in general position prediction (excluding deep tactical lines).
-4. Use of **oneDNN backend** and **callbacks** (e.g., early stopping) improved performance and shortened training time on CPUs.
+### **Activation Functions Explored**
+- ReLU  
+- Leaky ReLU  
+- Swish  
+- SparseMax  
+
+### **Hyperparameter Tuning**
+- **Methods**: Manual tuning, Grid Search, Bayesian Optimization, Neural Architecture Search (NAS).  
+- **Explored Parameters**:
+  - **Batch Sizes**: 32, 64.  
+  - **Learning Rates**: Fixed vs Decayed.  
+  - **Optimizers**: Adam, SGD.  
+  - **Epochs**: 20–100 with Early Stopping.  
 
 ---
 
-Thank you for visiting this repository! Feel free to explore, contribute, or share your feedback. 😊
+## ♟ **Stockfish Benchmarking**
+Model predictions were compared against **Stockfish** evaluations to assess accuracy and deviation:
+- **Average Deviation**: 178.68 (lower is better).  
+- **Simpler Positions**: Strong alignment (~29.4 deviation).  
+- **Complex Positions**: Higher deviation (~8226).  
+
+---
+
+## 📈 **Evaluation Results**
+
+| **Method/Model**       | **Accuracy (5000 Games)** |
+|-------------------------|---------------------------|
+| **MLP (Baseline)**      | 63.8%                    |
+| **MLP (Optimized)**      | 83.8%                    |
+| **ResNet-style MLP**    | 72.92%                   |
+| **MobileNet**           | 84.95% (10 games)        |
+| **Bayesian Optimization**| 93.33% (10 games)        |
+| **NAS**                 | 70.8%                    |
+| **Grid Search**         | 79.56%                   |
+
+---
+
+## 🧪 **Experiments Conducted**
+- **Dataset Sizes**: Evaluated on 10, 1000, 5000 games.  
+- **Metrics Tracked**: Loss, accuracy, and deviation from Stockfish.  
+- **Comparative Architectures**: MLP, ResNet-style MLP, MobileNet.  
+- **Training Tools Used**:
+  - Learning rate scheduling.  
+  - Early stopping to prevent overfitting.  
+
+---
+
+## 🏆 **Key Takeaways**
+1. **MLPs** can effectively predict chess outcomes based on raw FEN encodings.  
+2. **Swish activation** and **exponential learning rate decay** significantly improved training stability and accuracy.  
+3. Model performance aligns closely with **Stockfish** in simpler positions.  
+4. Leveraging **Intel oneDNN** accelerated training on CPUs, making this approach scalable.  
+
+---
+
+💡 **Ready to explore the future of AI in chess?**  
+Feel free to contribute, share feedback, or dive into the code. Let's push the boundaries of innovation together! ♟✨
